@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MerchandisesController < ApplicationController
   def index
     @merchandises = Merchandise.all
@@ -6,12 +8,10 @@ class MerchandisesController < ApplicationController
   def show
     @merchandises = Merchandise.all
     @id = params[:id]
-    @merchandises_limit = Merchandise.all.order(id: "DESC").limit(4)
+    @merchandises_limit = Merchandise.all.order(id: 'DESC').limit(4)
   end
 
-  def new
-  end
+  def new; end
 
-  def etit
-  end
+  def edit; end
 end
