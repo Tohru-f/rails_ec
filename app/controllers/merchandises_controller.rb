@@ -2,13 +2,12 @@
 
 class MerchandisesController < ApplicationController
   def index
-    @merchandises = Merchandise.all
+    @merchandises = Merchandise.with_attached_image
   end
 
   def show
-    @merchandises = Merchandise.all
-    @id = params[:id]
-    @merchandises_limit = Merchandise.all.order(id: 'DESC').limit(4)
+    @merchandise = Merchandise.find(params[:id])
+    @merchandises_limit = Merchandise.with_attached_image.order(id: 'DESC').limit(4)
   end
 
   def new; end
