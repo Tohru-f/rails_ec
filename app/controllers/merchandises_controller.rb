@@ -9,8 +9,4 @@ class MerchandisesController < ApplicationController
     @merchandise = Merchandise.find(params[:id])
     @merchandises_limit = Merchandise.with_attached_image.order(id: 'DESC').limit(4)
   end
-
-  def new; end
-
-  def edit; end
 end
