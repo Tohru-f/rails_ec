@@ -1,43 +1,40 @@
-<!DOCTYPE html>
-<html lang="en">
-  <body>
-    <!-- Section-->
-    <section class="py-5">
-      <div class="container px-4 px-lg-5 mt-1">
-        <h1 class="mb-5">管理者用商品一覧ページ</h1>
-        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-          <% @merchandises.each do |merchandise| %>
-            <div class="col mb-5">
-              <div class="card h-100">
-                <!-- Product image-->
-                <% if merchandise.image.attached? %>
-                  <%= image_tag merchandise.image, :size => '269x170' %>
-                <% end %>
-                <!-- Product details-->
-                <div class="card-body p-4">
-                  <div class="text-center">
-                    <!-- Product name-->
-                    <h5 class="fw-bolder">
-                      <%= link_to merchandise.name, merchandise_path(merchandise) %>
-                    </h5>
-                    <!-- Product price-->
-                    ¥<%= merchandise.amount.to_formatted_s(:delimited) %>-
-                  </div>
+<body>
+  <!-- Section-->
+  <section class="py-5">
+    <div class="container px-4 px-lg-5 mt-1">
+      <h1 class="mb-5">管理者用商品一覧ページ</h1>
+      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <% @merchandises.each do |merchandise| %>
+          <div class="col mb-5">
+            <div class="card h-100">
+              <!-- Product image-->
+              <% if merchandise.image.attached? %>
+                <%= image_tag merchandise.image, :size => '269x170' %>
+              <% end %>
+              <!-- Product details-->
+              <div class="card-body p-4">
+                <div class="text-center">
+                  <!-- Product name-->
+                  <h5 class="fw-bolder">
+                    <%= link_to merchandise.name, merchandise_path(merchandise) %>
+                  </h5>
+                  <!-- Product price-->
+                  ¥<%= merchandise.amount.to_formatted_s(:delimited) %>-
                 </div>
-                <!-- Product actions-->
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                  <div class="text-center">
-                    <%= link_to "編集", edit_admin_management_path(merchandise) %>
-                  </div>
-                  <div class="text-center">
-                    <%= link_to "削除", "/admin/managements/#{merchandise.id}", data: {turbo_method: :delete, turbo_confirm: "商品を削除します。よろしいですか？"} %>
-                  </div>
+              </div>
+              <!-- Product actions-->
+              <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                <div class="text-center">
+                  <%= link_to "編集", edit_admin_management_path(merchandise) %>
+                </div>
+                <div class="text-center">
+                  <%= link_to "削除", "/admin/managements/#{merchandise.id}", data: {turbo_method: :delete, turbo_confirm: "商品を削除します。よろしいですか？"} %>
                 </div>
               </div>
             </div>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
-    </section>
-  </body>
-</html>
+    </div>
+  </section>
+</body>

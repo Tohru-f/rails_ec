@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-  <div class="container px-4 px-lg-5 mt-5">
-    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-      <h1>商品登録画面</h1>
-      <%= form_with model: @merchandise, url: admin_managements_path, local: true do |f| %>
-        <div class="form-group">
-          <%= f.label :name, Merchandise.human_attribute_name(:name) %>
-          <%= f.text_field :name, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :amount, Merchandise.human_attribute_name(:amount) %>
-          <%= f.text_field :amount, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :description, Merchandise.human_attribute_name(:description) %>
-          <%= f.text_area :description, row: 1, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :stock, Merchandise.human_attribute_name(:stock) %>
-          <%= f.text_field :stock, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :how_to_cook, Merchandise.human_attribute_name(:how_to_cook) %>
-          <%= f.text_area :how_to_cook, row: 1, class: 'form-control' %>
-        </div>
-        <div class="form-group">
-          <%= f.label :image, Merchandise.human_attribute_name(:image) %>
-          <%= f.file_field :image, class: 'form-control' %>
-        </div>
-        <%= f.submit '登録する', class: 'btn btn-primary' %>
-      <% end %>
-    </div>
+<div class="container px-4 px-lg-5 mt-5">
+  <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+    <h1>商品登録画面</h1>
+    <%= form_with model: @merchandise, url: admin_managements_path, local: true do |f| %>
+      <%= render partial: 'layouts/error_messages' %>
+      <div class="form-group">
+        <%= f.label :name, Merchandise.human_attribute_name(:name) %>
+        <%= f.text_field :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :amount, Merchandise.human_attribute_name(:amount) %>
+        <%= f.text_field :amount, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :description, Merchandise.human_attribute_name(:description) %>
+        <%= f.text_area :description, row: 1, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :stock, Merchandise.human_attribute_name(:stock) %>
+        <%= f.text_field :stock, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :how_to_cook, Merchandise.human_attribute_name(:how_to_cook) %>
+        <%= f.text_area :how_to_cook, row: 1, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :image, Merchandise.human_attribute_name(:image) %>
+        <%= f.file_field :image, class: 'form-control' %>
+      </div>
+      <%= f.submit '登録する', class: 'btn btn-primary' %>
+    <% end %>
   </div>
-</html>
+</div>

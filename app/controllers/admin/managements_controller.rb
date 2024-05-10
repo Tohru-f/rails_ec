@@ -3,15 +3,10 @@
 module Admin
   class ManagementsController < ApplicationController
     before_action :basic
+    before_action :set_merchandise, only: %i[edit update destroy]
 
     def index
       @merchandises = Merchandise.with_attached_image
-    end
-
-    def destroy
-      @merchandise = Merchandise.find(params[:id])
-      @merchandise.destroy!
-      redirect_to admin_managements_path, notice: '商品を削除しました。'
     end
 
     def new
@@ -19,18 +14,27 @@ module Admin
     end
 
     def create
-      Merchandise.create(merchandise_params)
-      redirect_to admin_managements_path, notice: '商品を登録しました。'
+      @merchandise = Merchandise.new(merchandise_params)
+      if @merchandise.save
+        redirect_to admin_managements_path, notice: '商品を登録しました。'
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
 
-    def edit
-      @merchandise = Merchandise.find(params[:id])
-    end
+    def edit; end
 
     def update
-      @merchandise = Merchandise.find(params[:id])
-      @merchandise.update!(merchandise_params)
-      redirect_to admin_managements_path, notice: '商品の内容を変更しました。'
+      if @merchandise.update(merchandise_params)
+        redirect_to admin_managements_path, notice: '商品の内容を変更しました。'
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    end
+
+    def destroy
+      @merchandise.destroy!
+      redirect_to admin_managements_path, notice: '商品を削除しました。'
     end
 
     private
@@ -43,6 +47,10 @@ module Admin
       authenticate_or_request_with_http_basic do |_username, password|
         ENV['BASIC_AUTH_USERNAME'] && password == ENV['BASIC_AUTH_PASSWORD']
       end
+    end
+
+    def set_merchandise
+      @merchandise = Merchandise.find(params[:id])
     end
   end
 end
