@@ -17,6 +17,7 @@ ja:
         description: 商品説明
         stock: 在庫
         how_to_cook: 召し上がり方
+        image: 商品画像
         created_at: 登録日時
         updated_at: 更新日時
   date:
