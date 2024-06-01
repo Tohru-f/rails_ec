@@ -40,7 +40,7 @@ module Admin
     private
 
     def merchandise_params
-      params.require(:merchandise).permit(:id, :name, :amount, :description, :stock, :how_to_cook, :image)
+      params.require(:merchandise).permit(:name, :amount, :description, :stock, :how_to_cook, :image)
     end
 
     def basic

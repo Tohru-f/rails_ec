@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 
   def current_cart
     # cart_idをsessionに持つカードがあれば代入、無ければ新しく作って代入
-    current_cart = Cart.find_by(id: session[:cart_id]) || Cart.create
+    current_cart = Cart.find_or_create_by(id: session[:cart_id])
     # cart_idが入ったsessionがあればそのまま使う。無ければcurrent_cartのidを代入
     session[:cart_id] ||= current_cart.id
     # カート情報を返す
