@@ -75,3 +75,53 @@ merchandise7 = Merchandise.create!(
 )
 merchandise7.image.attach(io: File.open(Rails.root.join('app/assets/images/japanese_amberjack.JPG')),
                           filename: 'japanese_amberjack.JPG')
+
+merchandise8 = Merchandise.create!(
+  name: 'イラ',
+  amount: 1000,
+  description: '2.5Kg, 45cm',
+  stock: 1,
+  how_to_cook: 'フライ'
+)
+merchandise8.image.attach(io: File.open(Rails.root.join('app/assets/images/azurio_tuskfish1.jpg')),
+                          filename: 'azurio_tuskfish1.jpg')
+
+merchandise9 = Merchandise.create!(
+  name: 'イラ',
+  amount: 1500,
+  description: '3Kg, 50cm',
+  stock: 1,
+  how_to_cook: 'フライ'
+)
+merchandise9.image.attach(io: File.open(Rails.root.join('app/assets/images/azurio_tuskfish2.jpg')),
+                          filename: 'azurio_tuskfish2.jpg')
+
+merchandise10 = Merchandise.create!(
+  name: 'カサゴ',
+  amount: 100,
+  description: '200g, 15cm',
+  stock: 1,
+  how_to_cook: 'あら煮'
+)
+merchandise10.image.attach(io: File.open(Rails.root.join('app/assets/images/marbled_rockfish.jpg')),
+                           filename: 'marbled_rockfish.jpg.jpg')
+
+merchandise11 = Merchandise.create!(
+  name: 'キジハタ',
+  amount: 800,
+  description: '300g, 22cm',
+  stock: 1,
+  how_to_cook: '刺身、あら煮'
+)
+merchandise11.image.attach(io: File.open(Rails.root.join('app/assets/images/redspotted_grouper.jpg')),
+                           filename: 'redspotted_grouper.jpg')
+
+merchandise12 = Merchandise.create!(
+  name: 'イシガキダイ',
+  amount: 2000,
+  description: '800g, 30cm',
+  stock: 1,
+  how_to_cook: '刺身、塩焼き'
+)
+merchandise12.image.attach(io: File.open(Rails.root.join('app/assets/images/spotted_knifejaw.jpg')),
+                           filename: 'spotted_knifejaw.jpg')

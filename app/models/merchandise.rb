@@ -6,4 +6,7 @@ class Merchandise < ApplicationRecord
   validates :amount, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :stock, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   has_many :cart_items, dependent: :destroy
+  has_many :order_details, dependent: :destroy
+  has_many :orders, through: :order_details
+  acts_as_paranoid
 end

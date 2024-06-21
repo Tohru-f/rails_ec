@@ -1,0 +1,18 @@
+<style>
+  .purchase {
+    display: inline-block;
+    text-align: left;
+  }
+</style>
+<div class="py-5 text-center">
+  <h1>管理者用注文一覧ページ</h1>
+</div>
+<div class="text-center">
+  <div class="purchase">
+    <% @orders.each do |order| %>
+      ID: <%= link_to order.id, admin_order_path(order) %>,
+      Username: <%= order.username %>,
+      Total amount: ¥<%= order.total_amount.to_formatted_s(:delimited) %>- <br>
+    <% end %>
+  </div>
+</div>

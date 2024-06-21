@@ -10,6 +10,7 @@ ja:
     models:
       merchandise: 商品
       cart_item: カート内商品
+      order: 注文
     attributes:
       merchandise:
         id: ID
@@ -23,6 +24,8 @@ ja:
         updated_at: 更新日時
       cart_item:
         quantity: 数量
+      order:
+        cvv: CVV
   date:
     abbr_day_names:
     - 日

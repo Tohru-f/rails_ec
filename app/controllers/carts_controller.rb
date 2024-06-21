@@ -17,7 +17,7 @@ class CartsController < ApplicationController
       redirect_to merchandise_path(@merchandise) and return
     end
 
-    add_quantity
+    @cart_item.quantity += params[:quantity].to_i
 
     if @cart_item.save
       flash[:notice] = '商品が追加されました。'
@@ -29,6 +29,7 @@ class CartsController < ApplicationController
   end
 
   def destroy
+    # binding.pry
     if @cart_item.destroy
       flash[:notice] = 'カート内の商品が削除されました。'
     else
@@ -43,9 +44,5 @@ class CartsController < ApplicationController
     # 現セッションに属するカートの中に選択した商品idの商品が入っていれば@変数に代入
     # @cart_item = current_cart.cart_items.find_by(merchandise_id: params[:format])
     @cart_item = current_cart.cart_items.find_or_initialize_by(merchandise_id: params[:format])
-  end
-
-  def add_quantity
-    @cart_item.quantity += params[:quantity].to_i
   end
 end

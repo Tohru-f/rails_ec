@@ -6,13 +6,14 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :managements, only: %i[new create edit update index destroy]
+    resources :orders, only: %i[index show]
   end
-
-  # resources :carts, only: %i[index create destroy]
 
   get '/my_cart' => 'carts#my_cart'
   get '/create' => 'carts#create'
   delete '/destroy' => 'carts#destroy'
+
+  resources :orders, only: %i[new create]
 
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

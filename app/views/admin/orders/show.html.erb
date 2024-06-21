@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="py-5 text-center">
+      <h1>管理者用注文詳細ページ</h1>
+ <br>
+    </div>
+    <div class="col-md-7 col-lg-8">
+      <h4> - お客様情報 - </h4>
+      First name: <%= @order.first_name %> <br>
+      Last name: <%= @order.last_name %> <br>
+      Username: <%= @order.username %> <br>
+      Email: <%= @order.email %> <br>
+      Address: <%= @order.address %> <br>
+      Address2: <%= @order.address2 %> <br>
+      Country: <%= @order.country %> <br>
+      Prefecture: <%= @order.prefecture %> <br>
+      Zip: <%= @order.zip %> <br>
+      Name on card: <%= @order.name_on_card %> <br>
+      Credit card number: <%= @order.credit_card_number %> <br>
+      Expiration: <%= @order.expiration %> <br>
+      CVV: <%= @order.cvv %> <br>
+      <br>
+    </div>
+    <div class="col-md-5 col-lg-4 order-md-last">
+      <h4> - お買い上げ明細 - </h4>
+      <% @order_id = @order.id %>
+      <% @order_details = OrderDetail.with_deleted.where(order_id: @order_id) %>
+      <% @order_details.each do |order_detail| %>
+        商品名：<%= order_detail.name %> <br>
+        数量：<%= order_detail.quantity %> <br>
+        小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>- <br>
+        <br>
+      <% end %>
+      Total amount: ¥<%= @order.total_amount.to_formatted_s(:delimited) %>-
+    </div>
+  </div>
+</div>

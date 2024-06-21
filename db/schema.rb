@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_12_084926) do
+ActiveRecord::Schema[7.0].define(version: 2024_06_21_111850) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,41 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_084926) do
     t.string "how_to_cook"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.index ["deleted_at"], name: "index_merchandises_on_deleted_at"
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.bigint "merchandise_id", null: false
+    t.bigint "order_id", null: false
+    t.integer "amount"
+    t.integer "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.datetime "deleted_at"
+    t.string "name"
+    t.index ["deleted_at"], name: "index_order_details_on_deleted_at"
+    t.index ["merchandise_id"], name: "index_order_details_on_merchandise_id"
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "username", null: false
+    t.string "email", null: false
+    t.string "address", null: false
+    t.string "address2"
+    t.string "country", null: false
+    t.string "prefecture", null: false
+    t.string "zip", null: false
+    t.string "name_on_card", null: false
+    t.string "credit_card_number", null: false
+    t.date "expiration", null: false
+    t.string "cvv", null: false
+    t.integer "total_amount", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -79,4 +114,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_084926) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "merchandises"
+  add_foreign_key "order_details", "merchandises"
+  add_foreign_key "order_details", "orders"
 end
