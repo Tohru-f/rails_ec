@@ -72,15 +72,15 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.delivery_method = :smtp
   host = "#{ENV['HEROKU_APPNAME']}.herokuapp.com"
-  config.action_mailer.default_url_options = { host: host, protocol: 'https' }
+  config.action_mailer.default_url_options = { host:, protocol: 'https' }
   ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.gmail.com',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['GMAIL_USERNAME'],
-    :password       => ENV['GMAIL_PASSWORD'],
-    :domain         => 'gmail.com',
-    :enable_starttls_auto => true
+    address: 'smtp.gmail.com',
+    port: '587',
+    authentication: :plain,
+    user_name: ENV['GMAIL_USERNAME'],
+    password: ENV['GMAIL_PASSWORD'],
+    domain: 'gmail.com',
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
