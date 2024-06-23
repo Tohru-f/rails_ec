@@ -1,0 +1,30 @@
+<%= @order.username %>様、Seafood Shopでのお買い上げありがとうございます。
+===================================================================
+
+Seafood Shopでのご購入が完了しました。
+お買い上げ内容は下記の通りです。
+- お客様情報 -
+First name: <%= @order.first_name %>
+Last name: <%= @order.last_name %>
+Username: <%= @order.username %>
+Email: <%= @order.email %>
+Address: <%= @order.address %>
+Address2: <%= @order.address2 %>
+Country: <%= @order.country %>
+Prefecture: <%= @order.prefecture %>
+Zip: <%= @order.zip %>
+Name on card: <%= @order.name_on_card %>
+Credit card number: <%= @order.credit_card_number %>
+Expiration: <%= @order.expiration %>
+CVV: <%= @order.cvv %>
+
+- お買い上げ明細 -
+<% @order_id = @order.id %>
+<% @order_details = OrderDetail.where(order_id: @order_id) %>
+<% @order_details.each do |order_detail| %>
+  商品名：<%= order_detail.merchandise.name %>
+  数量：<%= order_detail.quantity %>
+  小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>¥
+<% end %>
+Total amount: ¥<%= @order.total_amount.to_formatted_s(:delimited) %>-
+本サイトにてお買い上げ誠にいただきありがとうございます。

@@ -36,6 +36,12 @@ services:
       - bundle:/usr/local/bundle
       - node_modules:/myapp/node_modules
     tty: true
+  mailcatcher:
+    image: schickling/mailcatcher
+    container_name: mailcatcher
+    ports:
+      - '1080:1080'
+      - '1025:1025'
 volumes:
   db:
   bundle:

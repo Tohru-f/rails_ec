@@ -2,7 +2,7 @@
   <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
     <h1>商品編集画面</h1>
     <%= form_with model: @merchandise, url: admin_management_path, local: true do |f| %>
-      <%= render partial: 'layouts/error_messages' %>
+      <%= render 'shared/error_messages', object: f.object %>
       <div class="form-group">
         <%= f.label :name, Merchandise.human_attribute_name(:name) %>
         <%= f.text_field :name, class: 'form-control' %>

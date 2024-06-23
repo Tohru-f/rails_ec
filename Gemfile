@@ -87,3 +87,5 @@ end
 
 gem 'aws-sdk-s3', require: false
 gem 'dotenv'
+gem 'paper_trail', '~> 15.1'
+gem 'paranoia'

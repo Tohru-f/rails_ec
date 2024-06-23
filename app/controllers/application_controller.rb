@@ -20,5 +20,6 @@ class ApplicationController < ActionController::Base
     # 現セッションに属するcart_itemsから取得したリソースの外部キーの値と一致している主キーの値を持つMerchandiseモデルのリソースを全て取得
     @cart_items = current_cart.cart_items.includes([:merchandise])
     @total_amount = 0
+    @order = Order.new
   end
 end

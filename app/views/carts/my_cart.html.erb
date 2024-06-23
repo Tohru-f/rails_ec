@@ -198,138 +198,156 @@
             </form>
           </div>
           <div class="col-md-7 col-lg-8">
-            <h4 class="mb-3">Billing address</h4>
-            <form class="needs-validation" novalidate>
-              <div class="row g-3">
-                <div class="col-sm-6">
-                  <label for="firstName" class="form-label">First name</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid first name is required.
+            <%= form_with model: @order, url: orders_path(@total_amount), method: :post, data: { turbo: false }, html: { class: 'form-horizontal' } do |f| %>
+              <h4 class="mb-3">Billing address</h4>
+              <%= render 'shared/error_messages', object: f.object %>
+              <form class="needs-validation" novalidate>
+                <div class="row g-3">
+                  <div class="col-sm-6">
+                    <%= f.label :first_name, Order.human_attribute_name(:first_name) %>
+                    <%= f.text_field :first_name, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:first_name) %>
+                        <%= @order.errors.full_messages_for(:first_name).first %>
+                      <% end %>
+                    </span>
                   </div>
-                </div>
-                <div class="col-sm-6">
-                  <label for="lastName" class="form-label">Last name</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    Valid last name is required.
+                  <div class="col-sm-6">
+                    <%= f.label :last_name, Order.human_attribute_name(:last_name) %>
+                    <%= f.text_field :last_name, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:last_name) %>
+                        <%= @order.errors.full_messages_for(:last_name).first %>
+                      <% end %>
+                    </span>
                   </div>
-                </div>
-                <div class="col-12">
-                  <label for="username" class="form-label">Username</label>
-                  <div class="input-group has-validation">
-                    <span class="input-group-text">@</span>
-                    <input type="text" class="form-control" id="username" placeholder="Username" required>
-                    <div class="invalid-feedback">
-                      Your username is required.
+                  <div class="col-12">
+                    <%= f.label :username, Order.human_attribute_name(:username) %>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text">@</span>
+                      <%= f.text_field :username, class: 'form-control', placeholder:"Username" %>
                     </div>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:username) %>
+                        <%= @order.errors.full_messages_for(:username).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <%= f.label :email, Order.human_attribute_name(:email) %>
+                    <%= f.text_field :email, class: 'form-control', placeholder:"you@example.com" %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:email) %>
+                        <%= @order.errors.full_messages_for(:email).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <%= f.label :address, Order.human_attribute_name(:address) %>
+                    <%= f.text_field :address, class: 'form-control', placeholder:"1234 Main St" %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:address) %>
+                        <%= @order.errors.full_messages_for(:address).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-12">
+                    <%= f.label :address2, Order.human_attribute_name(:address2), class: "text-body-secondary" %>
+                    <span>(Optional)</span>
+                    <%= f.text_field :address2, class: 'form-control', placeholder:"Apartment or suite" %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:address2) %>
+                        <%= @order.errors.full_messages_for(:address2).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-md-3">
+                    <%= f.label :country, Order.human_attribute_name(:country) %>
+                    <%= f.select :country, options_for_select(["Japan", "Austraila", "United States"]), include_blank: "select your country name", class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:country) %>
+                        <%= @order.errors.full_messages_for(:country).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-md-4">
+                    <%= f.label :prefecture, Order.human_attribute_name(:prefecture) %>
+                    <%= f.select :prefecture, options_for_select(["Tokyo", "Osaka", "Nagoya"]), include_blank: "select your prefecture name", class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:prefecture) %>
+                        <%= @order.errors.full_messages_for(:prefecture).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-md-5">
+                    <%= f.label :zip, Order.human_attribute_name(:zip) %>
+                    <%= f.text_field :zip, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:zip) %>
+                        <%= @order.errors.full_messages_for(:zip).first %>
+                      <% end %>
+                    </span>
                   </div>
                 </div>
-                <div class="col-12">
-                  <label for="email" class="form-label">Email <span class="text-body-secondary">(Optional)</span></label>
-                  <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                  <div class="invalid-feedback">
-                    Please enter a valid email address for shipping updates.
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label for="address" class="form-label">Address</label>
-                  <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
-                  <div class="invalid-feedback">
-                    Please enter your shipping address.
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label for="address2" class="form-label">Address 2 <span class="text-body-secondary">(Optional)</span></label>
-                  <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-                </div>
-                <div class="col-md-5">
-                  <label for="country" class="form-label">Country</label>
-                  <select class="form-select" id="country" required>
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <label for="state" class="form-label">State</label>
-                  <select class="form-select" id="state" required>
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <label for="zip" class="form-label">Zip</label>
-                  <input type="text" class="form-control" id="zip" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Zip code required.
-                  </div>
-                </div>
-              </div>
-              <hr class="my-4">
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="same-address">
-                <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
-              </div>
-              <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="save-info">
-                <label class="form-check-label" for="save-info">Save this information for next time</label>
-              </div>
-              <hr class="my-4">
-              <h4 class="mb-3">Payment</h4>
-              <div class="my-3">
+                <hr class="my-4">
                 <div class="form-check">
-                  <input id="credit" name="paymentMethod" type="radio" class="form-check-input" checked required>
-                  <label class="form-check-label" for="credit">Credit card</label>
+                  <input type="checkbox" class="form-check-input" id="same-address">
+                  <label class="form-check-label" for="same-address">Shipping address is the same as my billing address</label>
                 </div>
                 <div class="form-check">
-                  <input id="debit" name="paymentMethod" type="radio" class="form-check-input" required>
-                  <label class="form-check-label" for="debit">Debit card</label>
+                  <input type="checkbox" class="form-check-input" id="save-info">
+                  <label class="form-check-label" for="save-info">Save this information for next time</label>
                 </div>
-                <div class="form-check">
-                  <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-                  <label class="form-check-label" for="paypal">PayPal</label>
-                </div>
-              </div>
-              <div class="row gy-3">
-                <div class="col-md-6">
-                  <label for="cc-name" class="form-label">Name on card</label>
-                  <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                  <small class="text-body-secondary">Full name as displayed on card</small>
-                  <div class="invalid-feedback">
-                    Name on card is required
+                <hr class="my-4">
+                <h4 class="mb-3">Payment</h4>
+                <div class="my-3">
+                  <div class="form-check">
+                    <label class="form-check-label" for="credit">Credit card only accepted</label>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="cc-number" class="form-label">Credit card number</label>
-                  <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Credit card number is required
+                <div class="row gy-3">
+                  <div class="col-md-6">
+                    <%= f.label :name_on_card, Order.human_attribute_name(:name_on_card) %>
+                    <%= f.text_field :name_on_card, class: 'form-control' %>
+                    <small class="text-body-secondary">Full name as displayed on card</small>
+                    <p class= "text-danger">
+                      <% if @order.errors.include?(:name_on_card) %>
+                        <%= @order.errors.full_messages_for(:name_on_card).first %>
+                      <% end %>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <%= f.label :credit_card_number, Order.human_attribute_name(:credit_card_number) %>
+                    <%= f.text_field :credit_card_number, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:credit_card_number) %>
+                        <%= @order.errors.full_messages_for(:credit_card_number).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-md-3">
+                    <%= f.label :expiration, Order.human_attribute_name(:expiration) %>
+                    <%= f.text_field :expiration, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:expiration) %>
+                        <%= @order.errors.full_messages_for(:expiration).first %>
+                      <% end %>
+                    </span>
+                  </div>
+                  <div class="col-md-3">
+                    <%= f.label :cvv, Order.human_attribute_name(:cvv) %>
+                    <%= f.text_field :cvv, class: 'form-control' %>
+                    <span class= "text-danger">
+                      <% if @order.errors.include?(:cvv) %>
+                        <%= @order.errors.full_messages_for(:cvv).first %>
+                      <% end %>
+                    </span>
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <label for="cc-expiration" class="form-label">Expiration</label>
-                  <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Expiration date required
-                  </div>
-                </div>
-                <div class="col-md-3">
-                  <label for="cc-cvv" class="form-label">CVV</label>
-                  <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                  <div class="invalid-feedback">
-                    Security code required
-                  </div>
-                </div>
-              </div>
-              <hr class="my-4">
-              <button class="w-100 btn btn-primary btn-lg" type="submit">Continue to checkout</button>
-            </form>
+                <hr class="my-4">
+                <%= f.submit '購入する', class: 'w-100 btn btn-primary btn-lg' %>
+              </form>
+            <% end %>
           </div>
         </div>
       </main>
@@ -342,7 +360,7 @@
         </ul>
       </footer>
     </div>
-    <%# <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
     <script src="app/javascript/checkout.js"></script></body>
-</html> %>
+</body>
+</html>
