@@ -8,7 +8,8 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     @order[:total_amount] = params[:format]
-    if @order.save
+    ActiveRecord::Base.transaction do
+      @order.save!
       @cart_items.each do |item|
         order_detail = OrderDetail.new
         order_detail.order_id = @order.id
@@ -16,14 +17,14 @@ class OrdersController < ApplicationController
         order_detail.name = item.merchandise.name
         order_detail.quantity = item.quantity
         order_detail.amount = item.quantity * item.merchandise.amount
-        order_detail.save
+        order_detail.save!
       end
       redirect_to merchandises_path, notice: 'ご購入ありがとうございます。'
       OrderMailer.purchasing_email(@order).deliver_now
       @cart_items.destroy_all
-    else
-      render template: 'carts/my_cart', status: :unprocessable_entity
     end
+  rescue ActiveRecord::RecordInvalid
+    render template: 'carts/my_cart', status: :unprocessable_entity
   end
 
   private

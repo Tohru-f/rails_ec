@@ -23,9 +23,7 @@
     </div>
     <div class="col-md-5 col-lg-4 order-md-last">
       <h4> - お買い上げ明細 - </h4>
-      <% @order_id = @order.id %>
-      <% @order_details = OrderDetail.with_deleted.where(order_id: @order_id) %>
-      <% @order_details.each do |order_detail| %>
+      <% @order.order_details.each do |order_detail| %>
         商品名：<%= order_detail.name %> <br>
         数量：<%= order_detail.quantity %> <br>
         小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>- <br>
