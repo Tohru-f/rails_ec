@@ -177,39 +177,41 @@
                 </li>
               <% end %>
               <%= form_with url: update_path, method: :get, local: false do |f| %>
-                <% if @promotion_code %>
-                  <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                    <div class="text-success">
-                      <h6 class="my-0">Promotion code</h6>
-                      <%= @promotion_code.code %>
-                    </div>
-                    <div class="text-success">
-                      <br>
-                      <span class="text-success">¥<%= @promotion_code.amount %>-</span>
-                    </div>
+                <%= turbo_frame_tag 'promotions_list' do %>
+                  <% if @promotion_code %>
+                    <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                      <div class="text-success">
+                        <h6 class="my-0">Promotion code</h6>
+                        <%= @promotion_code.code %>
+                      </div>
+                      <div class="text-success">
+                        <br>
+                        <span class="text-success">¥<%= @promotion_code.amount %>-</span>
+                      </div>
+                    </li>
+                  <% end %>
+                  <li class="list-group-item d-flex justify-content-between">
+                    <span>Total (JPY)</span>
+                    <% if not @promotion_code%>
+                      <strong>
+                        ¥<%= @total_amount.to_formatted_s(:delimited) %>-
+                      </strong>
+                    <% end %>
+                    <% if @promotion_code%>
+                      <strong>
+                        <% @total_amount += @promotion_code.amount %>
+                        ¥<%= @total_amount.to_formatted_s(:delimited) %>-
+                      </strong>
+                    <% end %>
                   </li>
+                  <br>
+                  <form class="card p-2">
+                    <div class="input-group">
+                      <%= f.text_field :code, class: 'form-control', placeholder: 'Promotion code' %>
+                      <%= f.submit 'Redeem', class: "btn btn-secondary" %>
+                    </div>
+                  </form>
                 <% end %>
-                <li class="list-group-item d-flex justify-content-between">
-                  <span>Total (JPY)</span>
-                  <% if not @promotion_code%>
-                    <strong>
-                      ¥<%= @total_amount.to_formatted_s(:delimited) %>-
-                    </strong>
-                  <% end %>
-                  <% if @promotion_code%>
-                    <strong>
-                      <% @total_amount += @promotion_code.amount %>
-                      ¥<%= @total_amount.to_formatted_s(:delimited) %>-
-                    </strong>
-                  <% end %>
-                </li>
-                <br>
-                <form class="card p-2">
-                  <div class="input-group">
-                    <%= f.text_field :code, class: 'form-control', placeholder: 'Promotion code' %>
-                    <%= f.submit 'Redeem', class: "btn btn-secondary" %>
-                  </div>
-                </form>
               <% end %>
             </ul>
           </div>

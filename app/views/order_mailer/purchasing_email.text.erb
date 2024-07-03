@@ -26,5 +26,6 @@ CVV: <%= @order.cvv %>
   数量：<%= order_detail.quantity %>
   小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>¥
 <% end %>
+discount_amount: ¥ <%= @order.discount_amount.to_formatted_s(:delimited) %>-
 Total amount: ¥<%= @order.total_amount.to_formatted_s(:delimited) %>-
-本サイトにてお買い上げ誠にいただきありがとうございます。
+本サイトにてお買い上げいただき誠にありがとうございます。

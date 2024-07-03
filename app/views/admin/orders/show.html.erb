@@ -29,6 +29,7 @@
         小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>- <br>
         <br>
       <% end %>
+      Discount_amount: ¥ <%= @order.discount_amount.to_formatted_s(:delimited) %>- <br>
       Total amount: ¥<%= @order.total_amount.to_formatted_s(:delimited) %>-
     </div>
   </div>
