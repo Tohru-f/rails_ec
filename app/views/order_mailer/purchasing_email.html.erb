@@ -29,7 +29,9 @@
         数量：<%= order_detail.quantity %><br>
         小計：¥<%= order_detail.amount.to_formatted_s(:delimited) %>-<br>
       <% end %>
-      discount_amount: ¥ <%= @order.discount_amount.to_formatted_s(:delimited) %>-<br>
+      <% if @order.discount_amount %>
+        discount_amount: ¥ <%= @order.discount_amount.to_formatted_s(:delimited) %>-<br>
+      <% end %>
       Total amount: ¥<%= @order.total_amount.to_formatted_s(:delimited) %>-<br>
     </p>
     <p>本サイトにてお買い上げいただき誠にありがとうございます。</p>

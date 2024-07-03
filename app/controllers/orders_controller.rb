@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
       end
       redirect_to merchandises_path, notice: 'ご購入ありがとうございます。'
       OrderMailer.purchasing_email(@order).deliver_now
-      Promotion.find_by(id: params[:promotion_code]).destroy
+      Promotion.find_by(id: params[:promotion_code])&.destroy
       @cart_items.destroy_all
     end
   rescue ActiveRecord::RecordInvalid
@@ -43,7 +43,10 @@ class OrdersController < ApplicationController
   def set_params
     @order = Order.new(order_params)
     @order[:total_amount] = params[:format]
-    @order[:discount_amount] = Promotion.find_by(id: params[:promotion_code]).amount
+    return unless Promotion.find_by(id: params[:promotion_code])
+
+    @order[:discount_amount] =
+      Promotion.find_by(id: params[:promotion_code]).amount
   end
 
   def order_params
