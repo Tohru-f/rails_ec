@@ -6,7 +6,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    binding.pry
     set_params
     ActiveRecord::Base.transaction do
       @order.save!
