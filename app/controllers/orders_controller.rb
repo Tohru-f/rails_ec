@@ -21,7 +21,7 @@ class OrdersController < ApplicationController
       redirect_to merchandises_path, notice: 'ご購入ありがとうございます。'
       OrderMailer.purchasing_email(@order).deliver_now
       Promotion.find_by(id: params[:promotion_code])&.destroy
-      @cart_items.destroy_all
+      current_cart.destroy
     end
   rescue ActiveRecord::RecordInvalid
     render template: 'carts/my_cart', status: :unprocessable_entity
@@ -29,6 +29,8 @@ class OrdersController < ApplicationController
 
   def update
     @promotion_code = Promotion.find_by(code: params[:code])
+    @promotion_code[:cart_id] = current_cart.id
+    @promotion_code.save!
 
     if @promotion_code
       flash.now[:notice] = 'プロモーションコードを適用しました。'
