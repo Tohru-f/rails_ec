@@ -32,11 +32,11 @@ class OrdersController < ApplicationController
     if @promotion_code.nil?
       flash.now[:alert] = '使用できるプロモーションコードを入力して下さい。'
       render template: 'carts/my_cart'
-      return
+      nil
     elsif current_cart.promotion
       flash.now[:alert] = '一度のお買い物で使用できるコードは一つだけです。'
       render template: 'carts/my_cart'
-      return
+      nil
     else
       @promotion_code[:cart_id] = current_cart.id
       @promotion_code.save!
