@@ -181,11 +181,11 @@
                   <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
                     <div class="text-success">
                       <h6 class="my-0">Promotion code</h6>
-                      <%= @promotion_code.code %>
+                      <%= current_cart.promotion.code %>
                     </div>
                     <div class="text-success">
                       <br>
-                      <span class="text-success">¥<%= @promotion_code.amount %>-</span>
+                      <span class="text-success">¥<%= current_cart.promotion.amount %>-</span>
                     </div>
                   </li>
                 <% end %>
@@ -198,7 +198,7 @@
                   <% end %>
                   <% if current_cart.promotion %>
                     <strong>
-                      <% @total_amount += @promotion_code.amount %>
+                      <% @total_amount += current_cart.promotion.amount %>
                       ¥<%= @total_amount.to_formatted_s(:delimited) %>-
                     </strong>
                   <% end %>
@@ -214,7 +214,7 @@
             </ul>
           </div>
           <div class="col-md-7 col-lg-8">
-            <%= form_with model: @order, url: orders_path(@total_amount, promotion_code: @promotion_code), method: :post, data: { turbo: false }, html: { class: 'form-horizontal' } do |f| %>
+            <%= form_with model: @order, url: orders_path(@total_amount, promotion_code: current_cart.promotion), method: :post, data: { turbo: false }, html: { class: 'form-horizontal' } do |f| %>
               <h4 class="mb-3">Billing address</h4>
               <%= render 'shared/error_messages', object: f.object %>
               <form class="needs-validation" novalidate>

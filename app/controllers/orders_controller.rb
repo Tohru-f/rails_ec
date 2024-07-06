@@ -6,6 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def create
+    binding.pry
     set_params
     ActiveRecord::Base.transaction do
       @order.save!
@@ -29,15 +30,20 @@ class OrdersController < ApplicationController
 
   def update
     @promotion_code = Promotion.find_by(code: params[:code])
-    @promotion_code[:cart_id] = current_cart.id
-    @promotion_code.save!
-
-    if @promotion_code
-      flash.now[:notice] = 'プロモーションコードを適用しました。'
-    else
+    if @promotion_code.nil?
       flash.now[:alert] = '使用できるプロモーションコードを入力して下さい。'
+      render template: 'carts/my_cart'
+      return
+    elsif current_cart.promotion
+      flash.now[:alert] = '一度のお買い物で使用できるコードは一つだけです。'
+      render template: 'carts/my_cart'
+      return
+    else
+      @promotion_code[:cart_id] = current_cart.id
+      @promotion_code.save!
+      flash.now[:notice] = 'プロモーションコードを適用しました。'
+      render template: 'carts/my_cart'
     end
-    render template: 'carts/my_cart'
   end
 
   private

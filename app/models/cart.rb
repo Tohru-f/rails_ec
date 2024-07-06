@@ -2,5 +2,5 @@
 
 class Cart < ApplicationRecord
   has_many :cart_items, dependent: :destroy
-  has_one :promotion, dependent: nil
+  has_one :promotion, dependent: :destroy
 end
