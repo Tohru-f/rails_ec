@@ -29,7 +29,6 @@ class CartsController < ApplicationController
   end
 
   def destroy
-    # binding.pry
     if @cart_item.destroy
       flash[:notice] = 'カート内の商品が削除されました。'
     else

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   resources :orders, only: %i[new create]
 
+  get '/update' => 'orders#update'
+
   resources :tasks
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

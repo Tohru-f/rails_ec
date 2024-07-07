@@ -6,8 +6,7 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = Order.new(order_params)
-    @order[:total_amount] = params[:format]
+    set_params
     ActiveRecord::Base.transaction do
       @order.save!
       @cart_items.each do |item|
@@ -21,13 +20,41 @@ class OrdersController < ApplicationController
       end
       redirect_to merchandises_path, notice: 'ご購入ありがとうございます。'
       OrderMailer.purchasing_email(@order).deliver_now
-      @cart_items.destroy_all
+      Promotion.find_by(id: params[:promotion_code])&.destroy
+      current_cart.destroy
     end
   rescue ActiveRecord::RecordInvalid
     render template: 'carts/my_cart', status: :unprocessable_entity
   end
 
+  def update
+    @promotion_code = Promotion.find_by(code: params[:code])
+    if @promotion_code.nil?
+      flash.now[:alert] = '使用できるプロモーションコードを入力して下さい。'
+      render template: 'carts/my_cart'
+      nil
+    elsif current_cart.promotion
+      flash.now[:alert] = '一度のお買い物で使用できるコードは一つだけです。'
+      render template: 'carts/my_cart'
+      nil
+    else
+      @promotion_code[:cart_id] = current_cart.id
+      @promotion_code.save!
+      flash.now[:notice] = 'プロモーションコードを適用しました。'
+      render template: 'carts/my_cart'
+    end
+  end
+
   private
+
+  def set_params
+    @order = Order.new(order_params)
+    @order[:total_amount] = params[:format]
+    return unless Promotion.find_by(id: params[:promotion_code])
+
+    @order[:discount_amount] =
+      Promotion.find_by(id: params[:promotion_code]).amount
+  end
 
   def order_params
     params.require(:order).permit(:first_name, :last_name, :username, :email, :address, :address2, :country,

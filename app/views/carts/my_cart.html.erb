@@ -172,33 +172,49 @@
                     <% @total_amount += cart_item.merchandise.amount * cart_item.quantity %>
                   </span>
                   <span class="text-body-secondary">
-                    <%= button_to '削除', destroy_path(cart_item.merchandise.id), method: :delete, class: 'btn btn-primary' %>
+                    <%= button_to '削除', destroy_path(cart_item.merchandise.id), method: :delete, class: 'btn btn-danger' %>
                   </span>
                 </li>
               <% end %>
-              <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
-                <div class="text-success">
-                  <h6 class="my-0">Promo code</h6>
-                  <small>EXAMPLECODE</small>
-                </div>
-                <span class="text-success">-$5</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between">
-                <span>Total (JPY)</span>
-                <strong>
-                  ¥<%= @total_amount.to_formatted_s(:delimited) %>-
-                </strong>
-              </li>
+              <%= form_with url: update_path, method: :get, local: false do |f| %>
+                <% if current_cart.promotion %>
+                  <li class="list-group-item d-flex justify-content-between bg-body-tertiary">
+                    <div class="text-success">
+                      <h6 class="my-0">Promotion code</h6>
+                      <%= current_cart.promotion.code %>
+                    </div>
+                    <div class="text-success">
+                      <br>
+                      <span class="text-success">¥<%= current_cart.promotion.amount %>-</span>
+                    </div>
+                  </li>
+                <% end %>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Total (JPY)</span>
+                  <% if not current_cart.promotion %>
+                    <strong>
+                      ¥<%= @total_amount.to_formatted_s(:delimited) %>-
+                    </strong>
+                  <% end %>
+                  <% if current_cart.promotion %>
+                    <strong>
+                      <% @total_amount += current_cart.promotion.amount %>
+                      ¥<%= @total_amount.to_formatted_s(:delimited) %>-
+                    </strong>
+                  <% end %>
+                </li>
+                <br>
+                <form class="card p-2">
+                  <div class="input-group">
+                    <%= f.text_field :code, class: 'form-control', placeholder: 'Promotion code' %>
+                    <%= f.submit 'Redeem', class: "btn btn-secondary" %>
+                  </div>
+                </form>
+              <% end %>
             </ul>
-            <form class="card p-2">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo code">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
-              </div>
-            </form>
           </div>
           <div class="col-md-7 col-lg-8">
-            <%= form_with model: @order, url: orders_path(@total_amount), method: :post, data: { turbo: false }, html: { class: 'form-horizontal' } do |f| %>
+            <%= form_with model: @order, url: orders_path(@total_amount, promotion_code: current_cart.promotion), method: :post, data: { turbo: false }, html: { class: 'form-horizontal' } do |f| %>
               <h4 class="mb-3">Billing address</h4>
               <%= render 'shared/error_messages', object: f.object %>
               <form class="needs-validation" novalidate>

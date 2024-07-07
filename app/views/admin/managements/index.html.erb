@@ -25,10 +25,10 @@
               <!-- Product actions-->
               <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                 <div class="text-center">
-                  <%= link_to "編集", edit_admin_management_path(merchandise) %>
+                  <%= link_to "編集", edit_admin_management_path(merchandise), class: 'btn btn-primary' %>
                 </div>
                 <div class="text-center">
-                  <%= link_to "削除", "/admin/managements/#{merchandise.id}", data: {turbo_method: :delete, turbo_confirm: "商品を削除します。よろしいですか？"} %>
+                  <%= link_to "削除", "/admin/managements/#{merchandise.id}", data: {turbo_method: :delete, turbo_confirm: "商品を削除します。よろしいですか？"}, class: 'btn btn-danger' %>
                 </div>
               </div>
             </div>
